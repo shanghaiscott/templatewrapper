@@ -61,7 +61,7 @@ public class ClassTemplate extends AbstractTemplate {
         Field[] fields = data.getClass().getFields();
         // If we have them, use them.
         if (fields.length > 0) {
-          logger.log(Level.FINE, "Number of fields: {0}", fields.length);
+          LOG.log(Level.FINE, "Number of fields: {0}", fields.length);
           for (int counter = 0; counter < fields.length; counter++) {
             Object value = fields[counter].get(data);
             if (value != null) {
@@ -73,7 +73,7 @@ public class ClassTemplate extends AbstractTemplate {
         // then also look for public getters
         Method[] methods = data.getClass().getMethods();
         if (methods.length > 0) {
-          logger.log(Level.FINE, "Number of methods: {0}", methods.length);
+          LOG.log(Level.FINE, "Number of methods: {0}", methods.length);
           for (int counter = 0; counter < methods.length; counter++) {
             String name = methods[counter].getName();
             if (name.startsWith("get")) {
@@ -82,7 +82,7 @@ public class ClassTemplate extends AbstractTemplate {
                 if (value != null) {
                   String key =
                     name.substring(3, name.length()).toLowerCase();
-                  logger.log(Level.FINE, "Method name translated to: {0}", key);
+                  LOG.log(Level.FINE, "Method name translated to: {0}", key);
                   // if we haven't got an attribute already
                   if (!getVelocityContext().containsKey(key)) {
                     getVelocityContext().put(key, value.toString());
@@ -91,25 +91,25 @@ public class ClassTemplate extends AbstractTemplate {
               } catch (IllegalArgumentException e) {
                 // Will be hit if a "getter" is called which takes arguments.
                 // Ignore it.
-                logger.log(Level.WARNING, "Getter takes arguments. Ignoring.", e);
+                LOG.log(Level.WARNING, "Getter takes arguments. Ignoring.", e);
               }
             }
           }
         }
         // if we have no keys, we might be messed up
         if (getVelocityContext().getKeys().length == 0) {
-          logger.log(Level.WARNING,
+          LOG.log(Level.WARNING,
             "Object has no public attributes or get methods: {0}",
             data.getClass().getName());
         }
       }
 
     } catch (IllegalAccessException e) {
-      logger.log(Level.SEVERE, "Failed to access Class attribute", e);
+      LOG.log(Level.SEVERE, "Failed to access Class attribute", e);
     } catch (InvocationTargetException e) {
-      logger.log(Level.SEVERE, "Failed to invoke Class method", e);
+      LOG.log(Level.SEVERE, "Failed to invoke Class method", e);
     } catch (Exception e) {
-      logger.log(Level.SEVERE, "Velocity initialization failed", e);
+      LOG.log(Level.SEVERE, "Velocity initialization failed", e);
     }
   }
 
@@ -121,7 +121,7 @@ public class ClassTemplate extends AbstractTemplate {
   }
 
   /**
-   * @param properties the properties to set
+   * @param attributes  the properties to set
    */
   public final void setData(Object attributes) {
     this.data = attributes;

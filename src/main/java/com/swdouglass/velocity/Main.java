@@ -48,16 +48,10 @@ public class Main {
     }
 
     if (templatePath != null && propertiesPath != null) {
-      TemplateWrapper template = null;
 
-      template = new PropFileTemplate(
+      TemplateWrapper template = new PropFileTemplate(
         templatePath, templateEncoding, propertiesPath);
-
-      if (template != null) {
         System.out.println(template.merge());
-      } else {
-        System.out.print("Failed to create template.");
-      }
     } else {
       usage();
     }
@@ -68,7 +62,7 @@ public class Main {
     usage.append("java -jar TemplateWrapper.jar \\\n");
     usage.append("\t-t template \\\n");
     usage.append("\t-p properties \\\n");
-    usage.append("\t-e template encoding \\\n");
+    usage.append("\t-e template encoding ");//\\\n");
     System.out.println(usage.toString());
     System.exit(-1);
   }

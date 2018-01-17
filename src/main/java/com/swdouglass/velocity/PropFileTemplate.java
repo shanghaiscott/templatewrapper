@@ -48,6 +48,7 @@ public class PropFileTemplate extends ClassTemplate {
    * Constructor.
    * @param inTemplatePath path (in class path) of template file
    * @param inTemplateEncoding encoding of template file
+   * @param inPropertiesPath path for properties file
    */
   public PropFileTemplate(String inTemplatePath, String inTemplateEncoding,
     String inPropertiesPath) {
@@ -63,13 +64,13 @@ public class PropFileTemplate extends ClassTemplate {
    */
   @Override
   public final void init() {
-    logger.log(Level.FINE, "Intializing");
+    LOG.log(Level.FINE, "Intializing");
     try {
       properties.load(new FileReader(propertiesPath));
       data = properties;
       super.init();
     } catch (IOException e) {
-      logger.log(Level.SEVERE, "Properties initialization failed", e);
+      LOG.log(Level.SEVERE, "Properties initialization failed", e);
     }
   }
 

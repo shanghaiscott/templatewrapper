@@ -17,6 +17,8 @@ package com.swdouglass.velocity;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import org.junit.Ignore;
 
@@ -31,7 +33,7 @@ public abstract class AbstractTemplateTest {
 
   public void loadExpectedResult() {
     try {
-      expectedMergeResult = readFile("test/test1.txt");
+      expectedMergeResult = readFile("src/test/resources/test1.txt");
     } catch (IOException e) {
       System.out.println("reading expected result failed.");
       System.out.println(e);
@@ -67,16 +69,17 @@ public abstract class AbstractTemplateTest {
 
   public static String readFile(String pathname) throws IOException {
     StringBuilder stringBuilder = new StringBuilder();
-    Scanner scanner = new Scanner(new File(pathname));
-
-    try {
+    try (Scanner scanner = new Scanner(new File(pathname))) {
       while (scanner.hasNextLine()) {
         stringBuilder.append(scanner.nextLine());
         stringBuilder.append("\n");
       }
-    } finally {
-      scanner.close();
     }
     return stringBuilder.toString();
+  }
+  
+  public String getPath(final String inPartialPath) {
+    Path p = Paths.get("src","test","resources", inPartialPath);
+    return p.toString();
   }
 }

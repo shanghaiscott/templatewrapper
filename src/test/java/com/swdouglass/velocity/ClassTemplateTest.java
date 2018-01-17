@@ -43,7 +43,7 @@ public class ClassTemplateTest extends AbstractTemplateTest {
   @Before
   public void setUp() {
     template = new ClassTemplate();
-    template.setTemplatePath("test/test.vm");
+    template.setTemplatePath(getPath("test.vm"));
     loadExpectedResult();
   }
 
@@ -79,8 +79,8 @@ public class ClassTemplateTest extends AbstractTemplateTest {
   }
 
   private static class AttributesPojo2 {
-    private String name = "swan";
-    private String date = "09/21/2010";
+    private final String name = "swan";
+    private final String date = "09/21/2010";
     public String getName() {
       return name;
     }

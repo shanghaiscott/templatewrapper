@@ -14,6 +14,7 @@
  */
 package com.swdouglass.velocity;
 
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,17 +49,17 @@ public class PropFileTemplateTest extends AbstractTemplateTest {
   @After
   public void tearDown() {
   }
-
+  
   @Test
   public void testMerge() {
-    template = new PropFileTemplate("test/test.vm", "test/test.properties");
+    template = new PropFileTemplate(getPath("test.vm"), getPath("test.properties"));
     setMergeResult(template.merge());
     assertEquals(getMergeResult(), getExpectedMergeResult());
   }
 
   @Test
   public void testClasspathMerge() {
-    template = new PropFileTemplate("test.vm", "test/test.properties");
+    template = new PropFileTemplate(getPath("test.vm"), getPath("test.properties"));
     setMergeResult(template.merge());
     assertEquals(getMergeResult(), getExpectedMergeResult());
   }

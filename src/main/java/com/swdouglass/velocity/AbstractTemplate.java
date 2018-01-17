@@ -26,6 +26,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 /**
  * Base class for TemplateWrapper implementations.
@@ -34,7 +37,7 @@ import org.apache.velocity.app.VelocityEngine;
  */
 public abstract class AbstractTemplate implements TemplateWrapper {
 
-  protected static final Logger logger =
+  protected static final Logger LOG =
     Logger.getLogger(AbstractTemplate.class.getName());
   // VelocityEngine is initialized on first getVelocityEngine or via injection
   private VelocityEngine velocityEngine;
@@ -74,7 +77,7 @@ public abstract class AbstractTemplate implements TemplateWrapper {
       setTemplatePath (
         testURL.getFile().substring(testURL.getFile().lastIndexOf("/") + 1));
     } catch (MalformedURLException e) {
-      logger.log(Level.FINE, "Template path is not a valid URL", e);
+      LOG.log(Level.FINE, "Template path is not a valid URL", e);
     }
 
     getVelocityEngine().init();
@@ -84,16 +87,16 @@ public abstract class AbstractTemplate implements TemplateWrapper {
 
   @Override
   public String merge() {
-    logger.log(Level.FINE, "Merging");
+    LOG.log(Level.FINE, "Merging");
     StringWriter stringWriter = new StringWriter();
     try {
       getVelocityEngine().mergeTemplate(
         getTemplatePath(), getTemplateEncoding(), getVelocityContext(),
         stringWriter);
-    } catch (Exception e) {
-      logger.log(Level.SEVERE, "Velocity merge failed", e);
+    } catch (MethodInvocationException | ParseErrorException | ResourceNotFoundException e) {
+      LOG.log(Level.SEVERE, "Velocity merge failed", e);
     }
-    logger.log(Level.FINE, "merge result: {0}", stringWriter.toString());
+    LOG.log(Level.FINE, "merge result: {0}", stringWriter.toString());
     return stringWriter.toString();
   }
 
@@ -150,28 +153,28 @@ public abstract class AbstractTemplate implements TemplateWrapper {
   /**
    * @return the templatePath
    */
-  public String getTemplatePath() {
+  public final String getTemplatePath() {
     return templatePath;
   }
 
   /**
    * @param templatePath the templatePath to set
    */
-  public void setTemplatePath(String templatePath) {
+  public final void setTemplatePath(String templatePath) {
     this.templatePath = templatePath;
   }
 
   /**
    * @return the templateEncoding
    */
-  public String getTemplateEncoding() {
+  public final String getTemplateEncoding() {
     return templateEncoding;
   }
 
   /**
    * @param templateEncoding the templateEncoding to set
    */
-  public void setTemplateEncoding(String templateEncoding) {
+  public final void setTemplateEncoding(String templateEncoding) {
     this.templateEncoding = templateEncoding;
   }
 }
