@@ -38,7 +38,6 @@ public class ClassTemplate extends AbstractTemplate {
   public ClassTemplate(Object inAttributes, String inTemplatePath) {
     setData(inAttributes);
     setTemplatePath(inTemplatePath);
-    init();
   }
 
   public ClassTemplate(Object inAttributes, String inTemplatePath,
@@ -46,9 +45,9 @@ public class ClassTemplate extends AbstractTemplate {
     setData(inAttributes);
     setTemplatePath(inTemplatePath);
     setTemplateEncoding(inTemplateEncoding);
-    init();
   }
 
+  @Override
   public void init() {
     try {
       initVelocity();

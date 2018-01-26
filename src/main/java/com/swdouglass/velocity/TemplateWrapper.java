@@ -24,5 +24,6 @@ public interface TemplateWrapper {
 
   public String merge();
   public Boolean write();
+  public void init();
 
 }

@@ -51,7 +51,8 @@ public class Main {
 
       TemplateWrapper template = new PropFileTemplate(
         templatePath, templateEncoding, propertiesPath);
-        System.out.println(template.merge());
+      template.init();
+      System.out.println(template.merge());
     } else {
       usage();
     }

@@ -41,7 +41,6 @@ public class PropFileTemplate extends ClassTemplate {
   public PropFileTemplate(String inTemplatePath, String inPropertiesPath) {
     setTemplatePath(inTemplatePath);
     setPropertiesPath(inPropertiesPath);
-    init();
   }
 
   /**
@@ -55,7 +54,6 @@ public class PropFileTemplate extends ClassTemplate {
     setTemplatePath(inTemplatePath);
     setTemplateEncoding(inTemplateEncoding);
     setPropertiesPath(inPropertiesPath);
-    init();
   }
 
   /**
@@ -63,7 +61,7 @@ public class PropFileTemplate extends ClassTemplate {
    * the VelocityContext.
    */
   @Override
-  public final void init() {
+  public void init() {
     LOG.log(Level.FINE, "Intializing");
     try {
       properties.load(new FileReader(propertiesPath));
